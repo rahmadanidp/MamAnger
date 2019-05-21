@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -99,6 +100,8 @@ class ViewController: UIViewController {
     ]
     
     var batuBatuan: [UIView] = []
+    var aksi: [Int] = []
+    var suara: [Int] = []
 
     func angerMeter() {
         scale = self.colorSlider.value
@@ -106,10 +109,47 @@ class ViewController: UIViewController {
     }
     
     func animasi(batu: UIView, curPos: Float, condition: Float, defPos: CGPoint, dropPos: CGPoint) {
+        let curIdx = Int(22 * condition) - 1
+        
+        //print(curIdx)
+        
         if curPos < condition {
             batu.upBall(defPos)
+            if self.aksi[curIdx] == 2 {
+                self.aksi[curIdx] = 3
+            }
+            if self.suara[curIdx] == 0 {
+                self.suara[curIdx] = 1
+            }
         } else {
             batu.dropBall(dropPos)
+            if self.aksi[curIdx] == 0 {
+                self.aksi[curIdx] = 1
+            }
+            if self.suara[curIdx] == 2 {
+                self.suara[curIdx] = 3
+            }
+        }
+        
+        if curIdx == 11 {
+            return
+        }
+        if self.aksi[curIdx] == 1 {
+            UIDevice.vibrate()
+            self.aksi[curIdx] = 2
+        } else if self.aksi[curIdx] == 3 {
+            self.aksi[curIdx] = 0
+        }
+        if self.suara[curIdx] == 1 {
+            //self.player.play()
+            //sound()
+            self.arrayOfPlayers[curIdx].stop()
+            self.arrayOfPlayers[curIdx].prepareToPlay()
+            self.arrayOfPlayers[curIdx].play()
+            self.suara[curIdx] = 2
+            print("play", curIdx, curPos, condition)
+        } else if self.suara[curIdx] == 3 {
+            self.suara[curIdx] = 0
         }
     }
     
@@ -145,6 +185,7 @@ class ViewController: UIViewController {
         animasi(batu: circle15, curPos: posSlider, condition: 21/22, defPos: positionDefault[20], dropPos: positionDrop[20])
         animasi(batu: circle1, curPos: posSlider, condition: 22/22, defPos: positionDefault[21], dropPos: positionDrop[21])
         
+        //playSound()
         /*
         switch posSlider {
         case 0...(1/22):
@@ -222,6 +263,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        initSound()
+        
+        for _ in 1...22 {
+            aksi.append(0)
+        }
+        
+        for _ in 1...22 {
+            sound()
+            suara.append(2)
+        }
 
         circle1.rounded()
         circle2.rounded()
@@ -292,11 +344,50 @@ class ViewController: UIViewController {
 //
 //        print(trackLeftResizeable, trackRightResizeable)
     }
+
+    var arrayOfPlayers = [AVAudioPlayer]()
+    func sound() {
+        do {
+            if let bundle = Bundle.main.path(forResource: "soundFairy", ofType: "mp3") {
+                let alertSound = NSURL(fileURLWithPath: bundle)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
+                try AVAudioSession.sharedInstance().setActive(true)
+                let audioPlayer = try AVAudioPlayer(contentsOf: alertSound as URL)
+                arrayOfPlayers.append(audioPlayer)
+                //arrayOfPlayers.last?.prepareToPlay()
+                //arrayOfPlayers.last?.play()
+            }
+        } catch {
+            print(error)
+        }
+    }
+//    var player: AVAudioPlayer = AVAudioPlayer()
+//
+//    func initSound() {
+//        do
+//        {
+//            let audiopath = Bundle.main.path(forResource: "soundFairy", ofType: "mp3")
+//            try player = AVAudioPlayer(contentsOf: URL(fileURLWithPath: audiopath!) as URL)
+//        }
+//        catch {
+//
+//        }
+//        let session = AVAudioSession.sharedInstance()
+//        do {
+//            try session.setCategory(AVAudioSession.Category.playback, mode: .default)
+//            try AVAudioSession.sharedInstance().setActive(true)
+//        }
+//        catch {
+//        }
+//        //player.play()
+//    }
 }
 
+
 extension UIView {
+    
     func rounded(){
-        self.backgroundColor = .magenta
+        self.backgroundColor = .init(red: 251/255, green: 174/255, blue: 210/255, alpha: 1)
         self.layer.cornerRadius = self.frame.size.width/2
     }
 
@@ -310,10 +401,24 @@ extension UIView {
     
     func upBall(_ newPos: CGPoint){
         UIView.animate(withDuration: 1, delay: 0, options: [.allowUserInteraction, .curveEaseIn], animations: {
-            self.backgroundColor = .magenta
+            self.backgroundColor = .init(red: 251/255, green: 174/255, blue: 210/255, alpha: 1)
             self.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.frame.origin = newPos
+            //UIDevice.vibrate()
         }, completion: nil)
+        
+        
+        
     }
+    
 }
 
+
+extension UIDevice {
+    static func vibrate() {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+    let vibrate = UIImpactFeedbackGenerator(style: .medium)
+    vibrate.impactOccurred()
+    }
+}

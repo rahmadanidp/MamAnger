@@ -12,6 +12,7 @@
 		3312748E228DA44900AB187E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3312748C228DA44900AB187E /* Main.storyboard */; };
 		33127490228DA44B00AB187E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3312748F228DA44B00AB187E /* Assets.xcassets */; };
 		33127493228DA44B00AB187E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33127491228DA44B00AB187E /* LaunchScreen.storyboard */; };
+		331274D72293913100AB187E /* soundFairy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 331274D62293913100AB187E /* soundFairy.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		3312748F228DA44B00AB187E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33127492228DA44B00AB187E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33127494228DA44B00AB187E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		331274D62293913100AB187E /* soundFairy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soundFairy.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				3312748F228DA44B00AB187E /* Assets.xcassets */,
 				33127491228DA44B00AB187E /* LaunchScreen.storyboard */,
 				33127494228DA44B00AB187E /* Info.plist */,
+				331274D62293913100AB187E /* soundFairy.mp3 */,
 			);
 			path = MamAnger;
 			sourceTree = "<group>";
@@ -122,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				331274D72293913100AB187E /* soundFairy.mp3 in Resources */,
 				33127493228DA44B00AB187E /* LaunchScreen.storyboard in Resources */,
 				33127490228DA44B00AB187E /* Assets.xcassets in Resources */,
 				3312748E228DA44900AB187E /* Main.storyboard in Resources */,
