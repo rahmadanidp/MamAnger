@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var circle20: UIView!
     @IBOutlet weak var circle21: UIView!
     @IBOutlet weak var circle22: UIView!
+    @IBOutlet weak var ovalBackground: UIView!
     
     
     var scale: Float = 0
@@ -275,6 +276,8 @@ class ViewController: UIViewController {
             suara.append(2)
         }
 
+        ovalBackground.rounded2()
+        
         circle1.rounded()
         circle2.rounded()
         circle3.rounded()
@@ -407,8 +410,10 @@ extension UIView {
             //UIDevice.vibrate()
         }, completion: nil)
         
-        
-        
+    }
+    
+    func rounded2(){
+        self.layer.cornerRadius = 25
     }
     
 }
